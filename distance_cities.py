@@ -87,28 +87,13 @@ def cartesian_coordinates():
     list_lat = list(location_df["lat_radians"])
     list_lon = list(location_df["long_radians"])
 
-    cos_lat = []
-    for i in list_lat:
-        i = math.cos(i)
-        cos_lat.append(i)
+    cos_lat = [math.cos(i) for i in list_lat]
+    sin_lat = [math.sin(i) for i in list_lat]
+    cos_lon = [math.cos(i) for i in list_lon]
+    sin_lon = [math.sin(i) for i in list_lon]
 
-    sin_lat = []
-    for i in list_lat:
-        i = math.sin(i)
-        sin_lat.append(i)
-
-    cos_lon = []
-    for i in list_lon:
-        i = math.cos(i)
-        cos_lon.append(i)
-
-    sin_lon = []
-    for i in list_lon:
-        i = math.sin(i)
-        sin_lon.append(i)
-
-    x_1_list = [cos_lat[i] * cos_lon[i] for i in range(len(cos_lat))]
-    y_1_list = [cos_lat[i] * sin_lon[i] for i in range(len(cos_lat))]
+    x_1_list = [lat * lon for lat, lon in zip(cos_lat, cos_lon)]
+    y_1_list = [lat * lon for lat, lon in zip(cos_lat, sin_lon)]
     z_1_list = sin_lat
 
     x = sum(x_1_list)
@@ -116,10 +101,7 @@ def cartesian_coordinates():
     z = sum(z_1_list)
     return x, y, z
 
-
-x = cortesian_coordinates()[0]
-y = cortesian_coordinates()[1]
-z = cortesian_coordinates()[2]
+x, y, z = cartesian_coordinates()
 
 
 def get_middle_point_coordinates(x, y, z):

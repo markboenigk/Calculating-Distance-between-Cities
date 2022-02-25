@@ -81,7 +81,7 @@ def get_all_distances():
 print(get_all_distances())
 
 
-def cortesian_coordinates():
+def cartesian_coordinates():
     """This function calculates the cortesian coordinates from the geocoordinates from the cities and returns a x,y,z coordinate"""
     location_df = get_locations_df(locations)
     list_lat = list(location_df["lat_radians"])

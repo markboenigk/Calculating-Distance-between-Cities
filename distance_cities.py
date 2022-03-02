@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 import sklearn.neighbors
+import sklearn.metrics
 from geopy.geocoders import Nominatim
 import time
 from pprint import pprint
@@ -54,7 +55,7 @@ def get_df_locations(location_df):
         loc_a = loc_a.rename(columns={loc_a.columns[0]: 'From'})
         loc_b = location_df[i + 1:].reset_index(drop=True)
         loc_b = loc_b.rename(columns={loc_b.columns[0]: 'To'})
-        dist = sklearn.neighbors.DistanceMetric.get_metric('haversine')
+        dist = sklearn.metrics.DistanceMetric.get_metric('haversine')
         dist_matrix = (dist.pairwise(loc_a[['lat_radians', 'long_radians']],
                                      loc_b[['lat_radians', 'long_radians']]) *
                        3959)

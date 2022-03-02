@@ -8,7 +8,7 @@ import haversine as hs
 import math
 import plotly.express as px
 
-app = Nominatim(user_agent="test")
+app = Nominatim(user_agent="my-application")
 
 #locations = ['Boston', 'Frankfurt', 'Hamburg']
 locations = [
@@ -17,8 +17,8 @@ locations = [
 
 
 def get_location_by_address(address):
-    """This function returns a location as raw from an address
-    will repeat until success. Function sleeps for one second to avoid error"""
+    """This function returns the raw address from the location by requesting the Nominatim API. 
+    function sleeps for one second to comply with Nominatim Usage Policy """
     time.sleep(1)
     try:
         return app.geocode(address).raw

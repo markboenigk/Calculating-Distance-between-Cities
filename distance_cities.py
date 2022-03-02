@@ -57,13 +57,14 @@ def get_df_locations(location_df):
         dist = DistanceMetric.get_metric('haversine')
         dist_matrix = (dist.pairwise(loc_a[['lat_radians', 'long_radians']],
                                      loc_b[['lat_radians', 'long_radians']]) *
-                       3959 * 1.609344)
+                       3959)
         df_dist_matrix = (pd.DataFrame(dist_matrix,
                                        index=loc_a['From'],
                                        columns=loc_b['To']))
         df_dist_long = (pd.melt(df_dist_matrix.reset_index(), id_vars='From'))
         df_dist_long = df_dist_long.rename(
             columns={df_dist_long.columns[2]: 'Kilometers'})
+        df_dist_long["Kilometers"] = df_dist_long["Kilometers"] * 1.609344
         df = df.append(df_dist_long).reset_index(drop=True)
     return df
 

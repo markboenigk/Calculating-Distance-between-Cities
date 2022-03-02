@@ -57,14 +57,14 @@ def get_df_locations(location_df):
         dist = DistanceMetric.get_metric('haversine')
         dist_matrix = (dist.pairwise(loc_a[['lat_radians', 'long_radians']],
                                      loc_b[['lat_radians', 'long_radians']]) *
-                       3959)
+                       1)  #3959)
         df_dist_matrix = (pd.DataFrame(dist_matrix,
                                        index=loc_a['From'],
                                        columns=loc_b['To']))
         df_dist_long = (pd.melt(df_dist_matrix.reset_index(), id_vars='From'))
         df_dist_long = df_dist_long.rename(
             columns={df_dist_long.columns[2]: 'Kilometers'})
-        df_dist_long["Kilometers"] = df_dist_long["Kilometers"] * 1.609344
+        df_dist_long["Kilometers"] = df_dist_long["Kilometers"]
         df = df.append(df_dist_long).reset_index(drop=True)
     return df
 
@@ -76,6 +76,7 @@ def get_all_distances():
     df = df.rename(columns={df.columns[0]: 'From', df.columns[1]: 'To'})
     df_total = get_df_locations(location_df).append(df)
     df_total = df_total.sort_values(by=['From', 'To']).reset_index(drop=True)
+    #df_total["Kilometers"] = df_total["Kilometers"] * 2
     return df_total
 
 
@@ -149,4 +150,4 @@ def get_locations_map(Latitude, Longitude):
     return fig
 
 
-get_locations_map(Latitude, Longitude).show()
+#get_locations_map(Latitude, Longitude).show()

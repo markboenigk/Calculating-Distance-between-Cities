@@ -8,7 +8,7 @@ import haversine as hs
 import math
 import plotly.express as px
 
-app = Nominatim(user_agent="my-application")
+app = Nominatim(user_agent="my-distance-calculation")
 
 #locations = ['Boston', 'Frankfurt', 'Hamburg']
 locations = [
@@ -57,7 +57,7 @@ def get_df_locations(location_df):
         dist = DistanceMetric.get_metric('haversine')
         dist_matrix = (dist.pairwise(loc_a[['lat_radians', 'long_radians']],
                                      loc_b[['lat_radians', 'long_radians']]) *
-                       1)  #3959)
+                       3959)
         df_dist_matrix = (pd.DataFrame(dist_matrix,
                                        index=loc_a['From'],
                                        columns=loc_b['To']))
